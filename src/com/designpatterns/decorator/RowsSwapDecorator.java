@@ -1,0 +1,55 @@
+package com.designpatterns.decorator;
+
+import com.designpatterns.drawer.IDrawer;
+import com.designpatterns.matrix.IMatrix;
+
+public class RowsSwapDecorator implements IMatrix {
+
+    private IMatrix originalMatrix;
+    private int row1;
+    private int row2;
+
+    public RowsSwapDecorator(IMatrix originalMatrix,int row1ToSwap,int row2ToSwap) {
+        this.originalMatrix = originalMatrix;
+        this.row1 = row1ToSwap;
+        this.row2 = row2ToSwap;
+    }
+
+    @Override
+    public int getRowsNumber() {
+        return originalMatrix.getRowsNumber();
+    }
+
+    @Override
+    public int getColumnsNumber() {
+        return originalMatrix.getColumnsNumber();
+    }
+
+    @Override
+    public double getValue(int rowIndex, int colIndex) {
+        if(rowIndex == row1) {
+            rowIndex = row2;
+        }else if (rowIndex == row2) {
+            rowIndex = row1;
+        }
+        return originalMatrix.getValue(rowIndex,colIndex);
+    }
+
+    @Override
+    public void setValue(int rowIndex, int colIndex, double value) {
+        if(rowIndex == row1) {
+            rowIndex = row2;
+        }else if (rowIndex == row2) {
+            rowIndex = row1;
+        }
+        originalMatrix.setValue(rowIndex,colIndex,value);
+    }
+
+    @Override
+    public void draw(IDrawer drawer) {
+        drawer.prepare(this);
+        drawer.drawMatrix(this);
+        drawer.finish(this);
+    }
+
+}

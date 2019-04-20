@@ -9,7 +9,7 @@ public enum VectorsEmptyValues {
     Regular(0.0),
     Sparse(-99.99);
 
-    private double value;
+    private final double value;
 
     VectorsEmptyValues(double value) {
         this.value = value;

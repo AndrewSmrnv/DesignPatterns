@@ -1,20 +1,26 @@
 package com.designpatterns.matrix.helpers;
 
-import com.designpatterns.matrix.Matrix;
+import com.designpatterns.matrix.IMatrix;
 import com.designpatterns.vector.VectorsEmptyValues;
 import org.apache.commons.lang3.Validate;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Random;
 
 
 public class MatrixInitiator {
 
-    public static void fillMatrix (Matrix m, int notEmptyElements, int maxValue) {
+    public static void fillMatrix (IMatrix m, int notEmptyElements, int maxValue) {
         Validate.isTrue(notEmptyElements < m.getRowsNumber() * m.getRowsNumber(),
                 "Quantity of not empty elements can not be greater than number of matrix elements");
+
         Random ran = new Random();
-        DecimalFormat decimalFormat = new DecimalFormat("#,##");
+
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        DecimalFormatSymbols decimalFormatSymbols = decimalFormat.getDecimalFormatSymbols();
+        decimalFormatSymbols.setDecimalSeparator('.');
+        decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
 
         for (int p = 0; p < notEmptyElements; p++) {
             int rowInd, colInd;
