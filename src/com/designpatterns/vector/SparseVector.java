@@ -1,5 +1,7 @@
 package com.designpatterns.vector;
 
+import com.designpatterns.app.Constants;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +18,7 @@ public class SparseVector implements Vector {
 
     @Override
     public double getComponent(int index) {
-        return components.containsKey(index) ? components.get(index) : VectorsEmptyValues.Sparse.getValue();
+        return components.containsKey(index) ? components.get(index) : Constants.EmptyValues.SparseVector.getValue();
     }
 
     @Override

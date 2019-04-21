@@ -6,21 +6,12 @@ import com.designpatterns.matrix.IMatrix;
 public class ConsoleDrawer extends AbstractTextDrawer {
 
     @Override
-    public void prepare(IMatrix matrix){
-        //System.out.println("Starting ConsoleDrawer...");
-        super.prepare(matrix);
-    }
-
-    @Override
-    public void finish(IMatrix matrix) {
-        //System.out.println("ConsoleDrawer has finished it's work");
-    }
-
-    @Override
-    public void drawMatrix(IMatrix matrix) {
-        /*System.out.println();
-        System.out.println("ConsoleDrawer is drawing the matrix : ");*/
-        System.out.println(consoleOutput.toString());
+    protected void executeDrawing(IMatrix matrix) {
+        if(consoleOutput != null && consoleOutput.length() != 0) {
+            System.out.println(consoleOutput.toString());
+        } else {
+            System.out.println("Content for drawing in the console is empty");
+        }
     }
 
 }

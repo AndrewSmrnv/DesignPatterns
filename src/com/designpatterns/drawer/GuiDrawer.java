@@ -1,5 +1,6 @@
 package com.designpatterns.drawer;
 
+import com.designpatterns.app.Constants;
 import com.designpatterns.matrix.IMatrix;
 import org.apache.commons.lang3.Validate;
 
@@ -15,21 +16,7 @@ public class GuiDrawer extends AbstractTextDrawer {
     }
 
     @Override
-    public void prepare(IMatrix matrix) {
-        //System.out.println("Starting GuiDrawer...");
-        super.prepare(matrix);
-    }
-
-    @Override
-    public void finish(IMatrix matrix) {
-        //System.out.println("GuiDrawer has finished it's work");
-        super.finish(matrix);
-    }
-
-    @Override
-    public void drawMatrix(IMatrix matrix) {
-       /* System.out.println();
-        System.out.println("GuiDrawer is drawing the matrix : ");*/
+    protected void executeDrawing(IMatrix matrix) {
         checkAndPerformGuiOutput();
     }
 
@@ -38,6 +25,26 @@ public class GuiDrawer extends AbstractTextDrawer {
             performGuiOutput(consoleOutput.toString());
         } else {
             performGuiOutput("Content for Gui console is empty");
+        }
+    }
+
+    @Override
+    protected String getAlignedElement(double value) {
+        if(Constants.EmptyValues.getValues().contains(value)) {
+            return " " + super.getAlignedElement(value) + " ";
+        }else {
+            return super.getAlignedElement(value);
+
+           /* String element = super.getAlignedElement(value);
+            String leftPart = element.split("\\.")[0];
+            String rightPart = element.split("\\.")[1];
+
+            int leftPartNumbers =  drawingHelper.getMaxSymbolsLeft() - leftPart.trim().length();
+            int rightPartNumbers = drawingHelper.getMaxSymbolsRight() - rightPart.trim().length();
+
+            if(value > 0) leftPartNumbers --;
+
+            return DrawingHelper.getNSpaces(leftPartNumbers) + element  + DrawingHelper.getNSpaces(rightPartNumbers);*/
         }
     }
 

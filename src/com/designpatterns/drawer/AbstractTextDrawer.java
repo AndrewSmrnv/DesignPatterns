@@ -1,10 +1,11 @@
 package com.designpatterns.drawer;
 
 
+import com.designpatterns.app.Constants;
 import com.designpatterns.matrix.IMatrix;
 import com.designpatterns.matrix.helpers.DrawingHelper;
-import com.designpatterns.vector.VectorsEmptyValues;
 
+import static com.designpatterns.drawer.DrawingMode.CompositeMatrix;
 import static com.designpatterns.drawer.DrawingMode.Sparse;
 
 public abstract class AbstractTextDrawer implements IDrawer{
@@ -15,13 +16,13 @@ public abstract class AbstractTextDrawer implements IDrawer{
     private boolean showBorders;
     private DrawingMode mode = DrawingMode.Default;
 
-    private DrawingHelper drawingHelper;
+    protected DrawingHelper drawingHelper;
     protected StringBuilder consoleOutput;
 
     private int maxRowLength = 0;
 
-    @Override
-    public void prepare(IMatrix matrix) {
+    protected void prepare(IMatrix matrix) {
+        getDrawingHelper(matrix);
         composeConsoleOutput(matrix);
     }
 
@@ -33,11 +34,7 @@ public abstract class AbstractTextDrawer implements IDrawer{
             for (int col = 0; col < matrix.getColumnsNumber(); col++) {
 
                 double value = matrix.getValue(row, col);
-                String alignedElement = getDrawingHelper(matrix).getBeautyElement(value);
-
-                if(Sparse.equals(getMode()) && VectorsEmptyValues.Sparse.getValue() == value) {
-                    alignedElement = drawingHelper.getNSpaces(getDrawingHelper(matrix).getMaxElementLength());
-                }
+                String alignedElement = getAlignedElement(value);
 
                 rowBuilder.append(" " + alignedElement + " ");
                 if (col != matrix.getColumnsNumber() - 1 && showBorders) {
@@ -50,12 +47,29 @@ public abstract class AbstractTextDrawer implements IDrawer{
         addBorders(consoleOutput);
     }
 
-    @Override
-    public void finish(IMatrix matrix) {
+    protected String getAlignedElement(double value) {
+        String alignedElement = drawingHelper.getBeautifiedElement(value);
+        if((Sparse.equals(getMode()) || CompositeMatrix.equals(getMode()))
+                && Constants.EmptyValues.SparseVector.getValue() == value) {
+            alignedElement = drawingHelper.getNSpaces(drawingHelper.getMaxElementLength());
+        } else if(CompositeMatrix.equals(getMode()) && Constants.EmptyValues.CompositeMatrix.getValue() == value) {
+            alignedElement = drawingHelper.getNSpaces(drawingHelper.getMaxSymbolsLeft()) +
+                    DASH +
+                    drawingHelper.getNSpaces(drawingHelper.getMaxSymbolsRight());
+        }
+        return alignedElement;
     }
 
+    protected void finish(IMatrix matrix) {}
+
     @Override
-    public abstract void drawMatrix(IMatrix matrix);
+    public void drawMatrix(IMatrix matrix) {
+        prepare(matrix);
+        executeDrawing(matrix);
+        finish(matrix);
+    }
+
+    protected abstract void executeDrawing(IMatrix matrix);
 
     public void setDrawingMode(DrawingMode mode) {
         this.mode = mode;
@@ -88,7 +102,6 @@ public abstract class AbstractTextDrawer implements IDrawer{
         }
         sBuilder.append(drawingHelper.multiplyString(DASH, maxRowLength) + "\n");
     }
-
 
     protected DrawingHelper getDrawingHelper(IMatrix matrix) {
         if(drawingHelper == null) {

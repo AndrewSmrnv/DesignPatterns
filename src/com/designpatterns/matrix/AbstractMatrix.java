@@ -36,8 +36,6 @@ public abstract class AbstractMatrix implements IMatrix{
 
     @Override
     public void draw(IDrawer p) {
-        p.prepare(this);
         p.drawMatrix(this);
-        p.finish(this);
     }
 }

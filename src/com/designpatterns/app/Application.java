@@ -8,6 +8,7 @@ import com.designpatterns.matrix.IMatrix;
 import com.designpatterns.matrix.MatrixType;
 import com.designpatterns.matrix.RegularMatrix;
 import com.designpatterns.matrix.SparseMatrix;
+import com.designpatterns.matrix.composite.CompositeMatrix;
 import com.designpatterns.matrix.helpers.MatrixInitiator;
 
 import javax.swing.*;
@@ -54,6 +55,7 @@ public class Application {
         matrixTypeComboBox.addActionListener(e -> {
             JComboBox cb = (JComboBox)e.getSource();
             matrixType = MatrixType.getMatrixTypeById(cb.getSelectedIndex());
+            matrix = null;
         });
         matrixTypeComboBox.setBounds(MENU_WIDTH/2,110, DEFAULT_COMBO_BOX_WIDTH /2,DEFAULT_COMBO_BOX_HEIGHT);
 
@@ -68,12 +70,13 @@ public class Application {
         });
         displayModesComboBox.setBounds(MENU_WIDTH/2,150, DEFAULT_COMBO_BOX_WIDTH /2, DEFAULT_COMBO_BOX_HEIGHT);
 
-        JCheckBox checkBox = new JCheckBox("Show Matrix Borders");
-        checkBox.setSelected(true);
-        checkBox.setBounds(MENU_WIDTH/2 - DEFAULT_BUTTON_WIDTH /2,180, DEFAULT_BUTTON_WIDTH, DEFAULT_BUTTON_HEIGHT);
-        checkBox.addActionListener(e -> {
+        JCheckBox showMatrixBordersCBox = new JCheckBox("Show Matrix Borders");
+        showMatrixBordersCBox.setSelected(true);
+        showMatrixBordersCBox.setBounds(MENU_WIDTH/2 - DEFAULT_BUTTON_WIDTH /2,180, DEFAULT_BUTTON_WIDTH, DEFAULT_BUTTON_HEIGHT);
+        showMatrixBordersCBox.addActionListener(e -> {
             JCheckBox cb = (JCheckBox)e.getSource();
             showBorders = cb.isSelected();
+            displayMatrix();
         });
 
         JButton genBut = new JButton("Generate");
@@ -105,7 +108,7 @@ public class Application {
         mainFrame.add(displayModesComboBox);
         mainFrame.add(genBut);
         mainFrame.add(swapBut);
-        mainFrame.add(checkBox);
+        mainFrame.add(showMatrixBordersCBox);
         mainFrame.add(exitButton);
         mainFrame.add(buttonMenuSep);
         mainFrame.add(guiConsole);
@@ -135,7 +138,7 @@ public class Application {
         JLabel swapLabel = new JLabel("You want to swap :");
         swapLabel.setBounds(SWAP_WINDOW_WIDTH/2 - 75,20, 150,25);
 
-        JComboBox swapModeComboBox = new JComboBox(new String[]{"Rows", "Columns"});
+        JComboBox swapModeComboBox = new JComboBox(SwapMode.values());
         swapModeComboBox.setSelectedIndex(0);
         swapModeComboBox.addActionListener(e -> {
             JComboBox cb = (JComboBox)e.getSource();
@@ -245,16 +248,41 @@ public class Application {
                 matrix = new SparseMatrix(MATRIX_ROWS,MATRIX_COLUMNS);
                 ((AbstractTextDrawer) drawer).setDrawingMode(DrawingMode.Sparse);
                 break;
+            case Composite:
+                matrix = createCompositeMatrix();
+                ((AbstractTextDrawer) drawer).setDrawingMode(DrawingMode.CompositeMatrix);
+                break;
             default :
                 matrix = new RegularMatrix(MATRIX_ROWS,MATRIX_COLUMNS);
                 break;
         }
 
         MatrixInitiator.fillMatrix(matrix, QUANTITY_OF_NOT_NULL_ELEMENTS, MATRIX_MAX_VALUE);
-        ((AbstractTextDrawer)drawer).setShowBorders(showBorders);
-        matrix.draw(drawer);
-        swapBut.setEnabled(true);
+        displayMatrix();
 
+    }
+
+    private void displayMatrix() {
+        if(matrix != null) {
+            ((AbstractTextDrawer)drawer).setShowBorders(showBorders);
+            matrix.draw(drawer);
+            swapBut.setEnabled(true);
+        }
+    }
+
+    private CompositeMatrix createCompositeMatrix() {
+        RegularMatrix matrix1 = new RegularMatrix(5,1);
+        SparseMatrix matrix2 = new SparseMatrix(3,3);
+        RegularMatrix matrix3 = new RegularMatrix(4,2);
+
+        MatrixInitiator.fillMatrix(matrix1,4,MATRIX_MAX_VALUE);
+        MatrixInitiator.fillMatrix(matrix2,6,MATRIX_MAX_VALUE);
+        MatrixInitiator.fillMatrix(matrix3,7,MATRIX_MAX_VALUE);
+
+        CompositeMatrix compositeMatrix = new CompositeMatrix(matrix1);
+        compositeMatrix.addMatrix(matrix2);
+        compositeMatrix.addMatrix(matrix3);
+        return compositeMatrix;
     }
 
     private String[] getArrayOfRowIndexes() {

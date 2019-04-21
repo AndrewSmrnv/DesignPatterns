@@ -5,7 +5,8 @@ import java.util.Map;
 
 public enum MatrixType {
     Regular(0),
-    Sparse(1);
+    Sparse(1),
+    Composite(2);
 
     private final int id;
 

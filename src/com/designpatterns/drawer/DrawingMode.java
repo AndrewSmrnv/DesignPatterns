@@ -3,7 +3,8 @@ package com.designpatterns.drawer;
 public enum DrawingMode {
 
     Default(0),
-    Sparse(1);
+    Sparse(1),
+    CompositeMatrix(2);
 
     private int id;
 

@@ -47,8 +47,6 @@ public class ColumnsSwapDecorator implements IMatrix {
 
     @Override
     public void draw(IDrawer drawer) {
-        drawer.prepare(this);
         drawer.drawMatrix(this);
-        drawer.finish(this);
     }
 }

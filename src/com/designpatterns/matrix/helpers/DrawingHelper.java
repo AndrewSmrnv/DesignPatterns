@@ -1,5 +1,6 @@
 package com.designpatterns.matrix.helpers;
 
+import com.designpatterns.app.Constants;
 import com.designpatterns.matrix.IMatrix;
 
 public class DrawingHelper {
@@ -19,6 +20,9 @@ public class DrawingHelper {
         for (int row = 0; row < matrix.getRowsNumber(); row++) {
             for (int col = 0; col < matrix.getColumnsNumber(); col++) {
                 Double value = matrix.getValue(row, col);
+                if(Constants.EmptyValues.getValues().contains(value)) {
+                    continue;
+                }
                 String sValue = value.toString();
                 int length = sValue.length();
                 int lengthAfterDot = length - sValue.indexOf(".") - 1;
@@ -34,7 +38,7 @@ public class DrawingHelper {
         maxElementLength = maxSymbolsLeft + maxSymbolsRight + 1;
     }
 
-    public String getBeautyElement(Double value) {
+    public String getBeautifiedElement(Double value) {
         String sValue = value.toString();
         int length = sValue.length();
         int lengthAfterDot = length - sValue.indexOf(".") - 1;
@@ -47,6 +51,14 @@ public class DrawingHelper {
 
     public int getMaxElementLength() {
         return maxElementLength;
+    }
+
+    public int getMaxSymbolsLeft() {
+        return maxSymbolsLeft;
+    }
+
+    public int getMaxSymbolsRight() {
+        return maxSymbolsRight;
     }
 
     public static String getNSpaces(int numberOfSpaces) {
