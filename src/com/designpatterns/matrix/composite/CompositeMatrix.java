@@ -55,7 +55,19 @@ public class CompositeMatrix implements IMatrix {
 
     @Override
     public void setValue(int rowIndex, int colIndex, double value) {
+        // since all calls of this method will be invoked from a top composite it's enough to validate indexes at the beginning
+        if(parentComposite == null) {
+            Validate.isTrue(rowIndex < getRowsNumber() || colIndex < getColumnsNumber(), "Incorrect indexes %d,%d for setting value",rowIndex,colIndex);
+        }
 
+        if(colIndex < innerMatrix.getColumnsNumber()) {
+            if(rowIndex < innerMatrix.getRowsNumber()) {
+                innerMatrix.setValue(rowIndex,colIndex,value);
+            }
+        }else {
+            colIndex -= innerMatrix.getColumnsNumber();
+            childComposite.setValue(rowIndex,colIndex,value);
+        }
     }
 
     @Override

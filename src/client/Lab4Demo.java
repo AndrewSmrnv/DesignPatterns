@@ -1,5 +1,6 @@
 package client;
 
+import com.designpatterns.app.command.DoRandomChangeCommand;
 import com.designpatterns.drawer.ConsoleDrawer;
 import com.designpatterns.drawer.DrawingMode;
 import com.designpatterns.drawer.IDrawer;
@@ -7,6 +8,8 @@ import com.designpatterns.matrix.IMatrix;
 import com.designpatterns.matrix.RegularMatrix;
 import com.designpatterns.matrix.composite.CompositeMatrix;
 import com.designpatterns.matrix.helpers.MatrixInitiator;
+
+import java.util.Random;
 
 public class Lab4Demo {
 
@@ -45,8 +48,12 @@ public class Lab4Demo {
         ((ConsoleDrawer) drawer).setDrawingMode(DrawingMode.CompositeMatrix);
         compositeMatrix.draw(drawer);
 
-
-
-
+        Random ran = new Random();
+        double val = (2 * ran.nextDouble() - 1) * maxValue;
+        DoRandomChangeCommand doRandomChangeCommand = new DoRandomChangeCommand(compositeMatrix,1,2,val);
+        doRandomChangeCommand.execute();
+        compositeMatrix.draw(drawer);
+        doRandomChangeCommand.unExecute();
+        compositeMatrix.draw(drawer);
     }
 }
