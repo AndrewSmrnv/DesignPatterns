@@ -2,6 +2,7 @@ package com.designpatterns.matrix;
 
 import com.designpatterns.vector.Vector;
 import com.designpatterns.vector.SparseVector;
+import com.designpatterns.vector.VectorsEmptyValues;
 
 public class SparseMatrix extends AbstractMatrix {
 
@@ -14,4 +15,9 @@ public class SparseMatrix extends AbstractMatrix {
         return new SparseVector(dimensions);
     }
 
+    @Override
+    public String getElementString(int rowIndex, int colIndex) {
+        return getValue(rowIndex,colIndex) == VectorsEmptyValues.Sparse.getValue() ?
+                "" : String.valueOf(getValue(rowIndex,colIndex));
+    }
 }

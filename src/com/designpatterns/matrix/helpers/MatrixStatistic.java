@@ -1,8 +1,7 @@
 package com.designpatterns.matrix.helpers;
 
-import com.designpatterns.matrix.Matrix;
+import com.designpatterns.matrix.IMatrix;
 import com.designpatterns.vector.VectorsEmptyValues;
-import org.apache.commons.lang3.Validate;
 
 import java.text.DecimalFormat;
 
@@ -10,11 +9,11 @@ public class MatrixStatistic {
 
     private double sum, mean, max;
     private int notEmptyElements;
-    private Matrix m;
+    private IMatrix m;
     private DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
-    public MatrixStatistic(Matrix m) {
-        Validate.notNull(m, "Matrix must not be null to calculate it's statics");
+    public MatrixStatistic(IMatrix m) {
+        //Validate.notNull(m, "Matrix must not be null to calculate it's statics");
         this.m = m;
         calculateStatistic();
     }

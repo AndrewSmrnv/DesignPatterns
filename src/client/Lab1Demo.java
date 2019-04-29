@@ -1,6 +1,6 @@
 package client;
 
-import com.designpatterns.matrix.Matrix;
+import com.designpatterns.matrix.IMatrix;
 import com.designpatterns.matrix.RegularMatrix;
 import com.designpatterns.matrix.helpers.MatrixInitiator;
 import com.designpatterns.matrix.helpers.MatrixStatistic;
@@ -14,7 +14,7 @@ public class Lab1Demo {
         int notEmptyElements = 15;
         int maxValue = 100;
 
-        Matrix testMatrix = new RegularMatrix(ROWS,COLS);
+        IMatrix testMatrix = new RegularMatrix(ROWS,COLS);
         //Matrix testMatrix = new SparseMatrix(ROWS, COLS);
 
         MatrixInitiator.fillMatrix(testMatrix, notEmptyElements, maxValue);

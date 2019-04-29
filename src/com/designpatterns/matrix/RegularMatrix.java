@@ -14,4 +14,8 @@ public class RegularMatrix extends AbstractMatrix {
         return new RegularVector(dimension);
     }
 
+    @Override
+    public String getElementString(int rowIndex, int colIndex) {
+        return String.valueOf(getValue(rowIndex,colIndex));
+    }
 }

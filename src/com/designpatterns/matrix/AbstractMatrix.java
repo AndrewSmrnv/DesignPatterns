@@ -1,8 +1,9 @@
 package com.designpatterns.matrix;
 
+import com.designpatterns.drawer.IDrawer;
 import com.designpatterns.vector.Vector;
 
-public abstract class AbstractMatrix implements Matrix {
+public abstract class AbstractMatrix implements IMatrix {
 
     private final Vector[] vectors;
     private final int rows, columns;
@@ -33,4 +34,18 @@ public abstract class AbstractMatrix implements Matrix {
         return columns;
     }
 
+    @Override
+    public void draw(IDrawer drawer) {
+        drawer.beginDrawing(this);
+        drawElements(drawer);
+        drawer.finishDrawing(this);
+    }
+
+    protected void drawElements(IDrawer drawer) {
+        for (int i = 0; i < getRowsNumber(); i++) {
+            for (int j = 0; j < getColumnsNumber(); j++) {
+                drawer.drawElement(this,i,j);
+            }
+        }
+    }
 }
