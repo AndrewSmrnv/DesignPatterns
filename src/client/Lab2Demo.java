@@ -1,15 +1,12 @@
 package client;
 
-import com.designpatterns.app.Application;
-import com.designpatterns.decorator.ColumnsSwapDecorator;
+import com.designpatterns.decorator.swap.ColumnsSwapDecorator;
 import com.designpatterns.drawer.AbstractTextDrawer;
 import com.designpatterns.drawer.ConsoleDrawer;
 import com.designpatterns.drawer.IDrawer;
 import com.designpatterns.matrix.IMatrix;
-import com.designpatterns.matrix.RegularMatrix;
 import com.designpatterns.matrix.SparseMatrix;
 import com.designpatterns.matrix.helpers.MatrixInitiator;
-import com.designpatterns.matrix.helpers.MatrixStatistic;
 
 public class Lab2Demo {
 

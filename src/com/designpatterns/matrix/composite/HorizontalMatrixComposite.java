@@ -3,6 +3,9 @@ package com.designpatterns.matrix.composite;
 import com.designpatterns.app.Constants;
 import com.designpatterns.drawer.IDrawer;
 import com.designpatterns.matrix.IMatrix;
+import com.designpatterns.matrix.MatrixElement;
+
+import java.util.Iterator;
 //import org.apache.commons.lang3.Validate;
 
 public class HorizontalMatrixComposite implements IMatrix {
@@ -94,6 +97,11 @@ public class HorizontalMatrixComposite implements IMatrix {
         drawer.beginDrawing(this);
         drawElements(drawer);
         drawer.finishDrawing(this);
+    }
+
+    @Override
+    public Iterator<MatrixElement> iterator() {
+        return null;
     }
 
     protected void drawElements(IDrawer drawer) {

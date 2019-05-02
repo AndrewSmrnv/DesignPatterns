@@ -1,28 +1,16 @@
-package com.designpatterns.decorator;
+package com.designpatterns.decorator.swap;
 
-import com.designpatterns.drawer.IDrawer;
 import com.designpatterns.matrix.IMatrix;
 
-public class ColumnsSwapDecorator implements IMatrix {
+public class ColumnsSwapDecorator extends AbstractSwapDecorator {
 
-    private IMatrix originalMatrix;
     private int col1;
     private int col2;
 
     public ColumnsSwapDecorator(IMatrix originalMatrix, int col1ToSwap, int col2ToSwap) {
-        this.originalMatrix = originalMatrix;
+        super(originalMatrix);
         this.col1 = col1ToSwap;
         this.col2 = col2ToSwap;
-    }
-
-    @Override
-    public int getRowsNumber() {
-        return originalMatrix.getRowsNumber();
-    }
-
-    @Override
-    public int getColumnsNumber() {
-        return originalMatrix.getColumnsNumber();
     }
 
     @Override
@@ -53,20 +41,5 @@ public class ColumnsSwapDecorator implements IMatrix {
             colIndex = col1;
         }
         return originalMatrix.getElementString(rowIndex,colIndex);
-    }
-
-    @Override
-    public void draw(IDrawer drawer) {
-        drawer.beginDrawing(this);
-        drawElements(drawer);
-        drawer.finishDrawing(this);
-    }
-
-    protected void drawElements(IDrawer drawer) {
-        for (int i = 0; i < getRowsNumber(); i++) {
-            for (int j = 0; j < getColumnsNumber(); j++) {
-                drawer.drawElement(this,i,j);
-            }
-        }
     }
 }

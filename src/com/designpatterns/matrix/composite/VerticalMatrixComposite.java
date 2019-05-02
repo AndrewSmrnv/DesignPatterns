@@ -3,6 +3,9 @@ package com.designpatterns.matrix.composite;
 import com.designpatterns.decorator.TransposingDecorator;
 import com.designpatterns.drawer.IDrawer;
 import com.designpatterns.matrix.IMatrix;
+import com.designpatterns.matrix.MatrixElement;
+
+import java.util.Iterator;
 
 public class VerticalMatrixComposite implements IMatrix {
 
@@ -45,5 +48,10 @@ public class VerticalMatrixComposite implements IMatrix {
     @Override
     public void draw(IDrawer drawer) {
         new TransposingDecorator(horizontalMatrixComposite).draw(drawer);
+    }
+
+    @Override
+    public Iterator<MatrixElement> iterator() {
+        return null;
     }
 }

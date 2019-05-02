@@ -2,6 +2,9 @@ package com.designpatterns.decorator;
 
 import com.designpatterns.drawer.IDrawer;
 import com.designpatterns.matrix.IMatrix;
+import com.designpatterns.matrix.MatrixElement;
+
+import java.util.Iterator;
 
 public class TransposingDecorator implements IMatrix {
 
@@ -41,6 +44,11 @@ public class TransposingDecorator implements IMatrix {
         drawer.beginDrawing(this);
         drawElements(drawer);
         drawer.finishDrawing(this);
+    }
+
+    @Override
+    public Iterator<MatrixElement> iterator() {
+        return originalMatrix.iterator();
     }
 
     protected void drawElements(IDrawer drawer) {

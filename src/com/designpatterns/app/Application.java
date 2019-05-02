@@ -1,8 +1,8 @@
 package com.designpatterns.app;
 
-import com.designpatterns.decorator.ColumnsSwapDecorator;
-import com.designpatterns.decorator.RowsSwapDecorator;
-import com.designpatterns.decorator.SwapMode;
+import com.designpatterns.decorator.swap.ColumnsSwapDecorator;
+import com.designpatterns.decorator.swap.RowsSwapDecorator;
+import com.designpatterns.decorator.swap.SwapMode;
 import com.designpatterns.drawer.*;
 import com.designpatterns.matrix.IMatrix;
 import com.designpatterns.matrix.RegularMatrix;

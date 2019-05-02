@@ -1,4 +1,4 @@
-package com.designpatterns.decorator;
+package com.designpatterns.decorator.swap;
 
 import java.util.HashMap;
 import java.util.Map;
