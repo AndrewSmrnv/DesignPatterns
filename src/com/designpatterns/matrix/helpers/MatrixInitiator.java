@@ -2,7 +2,6 @@ package com.designpatterns.matrix.helpers;
 
 import com.designpatterns.app.Constants;
 import com.designpatterns.matrix.IMatrix;
-import com.designpatterns.vector.VectorsEmptyValues;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;

@@ -1,7 +1,7 @@
 package com.designpatterns.matrix.helpers;
 
 import com.designpatterns.matrix.IMatrix;
-import com.designpatterns.vector.VectorsEmptyValues;
+import com.designpatterns.vector.EmptyValues;
 
 import java.text.DecimalFormat;
 
@@ -29,7 +29,7 @@ public class MatrixStatistic {
             for (int j = 0; j < cols; j++) {
                 double elem = m.getValue(i, j);
                 s += elem;
-                if (!VectorsEmptyValues.getValues().contains(elem)) count++;
+                if (!EmptyValues.getValues().contains(elem)) count++;
                 if (elem > maxV) maxV = elem;
             }
         sum = s;

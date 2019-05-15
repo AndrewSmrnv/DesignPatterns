@@ -4,14 +4,15 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public enum VectorsEmptyValues {
+public enum EmptyValues {
 
     Regular(0.0),
-    Sparse(-99.99);
+    Sparse(-99.99),
+    Composite(-999.999);
 
     private double value;
 
-    VectorsEmptyValues(double value) {
+    EmptyValues(double value) {
         this.value = value;
     }
 
@@ -20,6 +21,6 @@ public enum VectorsEmptyValues {
     }
 
     public static Set<Double> getValues() {
-        return Arrays.stream(VectorsEmptyValues.values()).map(VectorsEmptyValues::getValue).collect(Collectors.toSet());
+        return Arrays.stream(EmptyValues.values()).map(EmptyValues::getValue).collect(Collectors.toSet());
     }
 }

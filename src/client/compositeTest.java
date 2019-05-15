@@ -5,8 +5,7 @@ import com.designpatterns.drawer.ConsoleDrawer;
 import com.designpatterns.drawer.IDrawer;
 import com.designpatterns.matrix.IMatrix;
 import com.designpatterns.matrix.RegularMatrix;
-import com.designpatterns.matrix.composite.HorizontalMatrixComposite;
-import com.designpatterns.matrix.composite.VerticalMatrixComposite;
+import com.designpatterns.matrix.composite.CompositeMatrix;
 import com.designpatterns.matrix.helpers.MatrixInitiator;
 
 public class compositeTest {
@@ -32,8 +31,7 @@ public class compositeTest {
         matrix2.draw(drawer);
         matrix3.draw(drawer);
 
-        HorizontalMatrixComposite compositeMatrix = new HorizontalMatrixComposite(matrix1);
-
+        CompositeMatrix compositeMatrix = new CompositeMatrix(matrix1);
         compositeMatrix.addMatrix(matrix2);
         compositeMatrix.addMatrix(matrix3);
 
@@ -45,12 +43,9 @@ public class compositeTest {
         compositeMatrix.draw(drawer);
 
         TransposingDecorator transposingDecorator = new TransposingDecorator(compositeMatrix);
-        //transposingDecorator.draw(drawer);
+        transposingDecorator.draw(drawer);
 
         System.out.println();
-        VerticalMatrixComposite verticalMatrixComposite = new VerticalMatrixComposite(compositeMatrix);
-        verticalMatrixComposite.addMatrix(matrix2);
-        verticalMatrixComposite.draw(drawer);
 
 
     }

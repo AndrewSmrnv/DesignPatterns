@@ -1,5 +1,6 @@
 package com.designpatterns.app;
 
+import com.designpatterns.decorator.TransposingDecorator;
 import com.designpatterns.decorator.swap.ColumnsSwapDecorator;
 import com.designpatterns.decorator.swap.RowsSwapDecorator;
 import com.designpatterns.decorator.swap.SwapMode;
@@ -7,7 +8,7 @@ import com.designpatterns.drawer.*;
 import com.designpatterns.matrix.IMatrix;
 import com.designpatterns.matrix.RegularMatrix;
 import com.designpatterns.matrix.SparseMatrix;
-import com.designpatterns.matrix.composite.HorizontalMatrixComposite;
+import com.designpatterns.matrix.composite.CompositeMatrix;
 import com.designpatterns.matrix.helpers.MatrixInitiator;
 
 import javax.swing.*;
@@ -239,16 +240,17 @@ public class Application {
         switch (matrixType) {
             case Sparse :
                 matrix = new SparseMatrix(MATRIX_ROWS,MATRIX_COLUMNS);
+                MatrixInitiator.fillMatrix(matrix, QUANTITY_OF_NOT_NULL_ELEMENTS, MATRIX_MAX_VALUE);
                 break;
             case Composite:
                 matrix = createCompositeMatrix();
                 break;
             default :
                 matrix = new RegularMatrix(MATRIX_ROWS,MATRIX_COLUMNS);
+                MatrixInitiator.fillMatrix(matrix, QUANTITY_OF_NOT_NULL_ELEMENTS, MATRIX_MAX_VALUE);
                 break;
         }
 
-        MatrixInitiator.fillMatrix(matrix, QUANTITY_OF_NOT_NULL_ELEMENTS, MATRIX_MAX_VALUE);
         displayMatrix();
         swapBut.setEnabled(true);
 
@@ -261,7 +263,7 @@ public class Application {
         }
     }
 
-    private HorizontalMatrixComposite createCompositeMatrix() {
+    private CompositeMatrix createCompositeMatrix() {
         RegularMatrix matrix1 = new RegularMatrix(5,1);
         SparseMatrix matrix2 = new SparseMatrix(3,3);
         RegularMatrix matrix3 = new RegularMatrix(4,2);
@@ -270,9 +272,14 @@ public class Application {
         MatrixInitiator.fillMatrix(matrix2,6,MATRIX_MAX_VALUE);
         MatrixInitiator.fillMatrix(matrix3,7,MATRIX_MAX_VALUE);
 
-        HorizontalMatrixComposite compositeMatrix = new HorizontalMatrixComposite(matrix1);
-        compositeMatrix.addMatrix(matrix2);
-        compositeMatrix.addMatrix(matrix3);
+        CompositeMatrix innercompositeMatrix = new CompositeMatrix(matrix1);
+        innercompositeMatrix.addMatrix(matrix2);
+        innercompositeMatrix.addMatrix(matrix3);
+
+        TransposingDecorator transposingDecorator = new TransposingDecorator(innercompositeMatrix);
+        CompositeMatrix compositeMatrix = new CompositeMatrix(transposingDecorator);
+        compositeMatrix.addMatrix(matrix1);
+
         return compositeMatrix;
     }
 

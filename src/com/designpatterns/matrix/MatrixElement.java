@@ -3,9 +3,9 @@ package com.designpatterns.matrix;
 public class MatrixElement {
     int i;
     int j;
-    String stringValue;
-    double value;
-    MatrixElement next;
+    public String stringValue;
+    public double value;
+    public MatrixElement next;
 
     public MatrixElement(int i, int j, double value,String stringValue) {
         this.i = i;
